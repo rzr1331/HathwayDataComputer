@@ -13,7 +13,6 @@ from flask import Flask, render_template
 app = Flask('UsageCal')
 @app.route('/')
 
-
 def index():
     global uploaded,downloaded,total
     return render_template('index.html',startDate=getStartDate(),endDate=getEndDate(),uploaded=uploaded,downloaded=downloaded,total=total,remaining=remaining)
@@ -74,9 +73,11 @@ uploaded = 0
 downloaded = 0
 total = 0
 remaining = 350
+password='pass'
+username='user'
 
 def main():
-    global uploaded,downloaded,total,remaining
+    global uploaded,downloaded,total,remaining,password,username
     # Start a session so we can have persistant cookies
     # Session() >> http://docs.python-requests.org/en/latest/api/#request-sessions
     session = requests.Session()
@@ -85,9 +86,9 @@ def main():
     # You are wrongly using string values instead of the intended variables here that is RegisterNumber and not 'RegisterNumber'
     login_data = {
     'AJAX_REQUEST_ENABLE'   : 'true',
-    'password' : 'password',
+    'password' : password,
     'servicetype' : 'BB',
-    'username' : 'username'
+    'username' : username
     }
     print login_data
 
@@ -131,4 +132,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-    app.run(host='0.0.0.0',debug=true)
+    app.run(host='0.0.0.0',debug=True)
