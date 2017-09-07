@@ -17,14 +17,19 @@ uploaded = 0
 downloaded = 0
 total = 0
 remaining = 350
-password='password'
-username='username'
+password='Hathway@123'
+username='sahaiavichal'
 
 app = Flask('UsageCal')
 
 @app.route('/')
 def index():
-    global uploaded,downloaded,total
+    global uploaded,downloaded,total,remaining
+    uploaded = 0
+    downloaded = 0
+    total = 0
+    remaining = 350
+    main()
     return render_template('index.html',startDate=getStartDate(),endDate=getEndDate(),uploaded=uploaded,downloaded=downloaded,total=total,remaining=remaining)
 
 def getStartDate():
@@ -153,5 +158,4 @@ def main():
     print remaining
 
 if __name__ == '__main__':
-    main()
     app.run(host='0.0.0.0',debug=False)
