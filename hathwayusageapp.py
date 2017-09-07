@@ -10,9 +10,19 @@ import sys
 import json
 from flask import Flask, render_template
 
-app = Flask('UsageCal')
-@app.route('/')
+URL= 'http://isp.hathway.net:7406/selfcare/index.php?r=login/loginas'
+soup = BeautifulSoup(urllib2.urlopen(URL),'html.parser')
 
+uploaded = 0
+downloaded = 0
+total = 0
+remaining = 350
+password='password'
+username='username'
+
+app = Flask('UsageCal')
+
+@app.route('/')
 def index():
     global uploaded,downloaded,total
     return render_template('index.html',startDate=getStartDate(),endDate=getEndDate(),uploaded=uploaded,downloaded=downloaded,total=total,remaining=remaining)
@@ -65,16 +75,15 @@ def getUsageNumber(strVal):
     valInt = float(val)
     return valInt
 
-
-URL= 'http://isp.hathway.net:7406/selfcare/index.php?r=login/loginas'
-soup = BeautifulSoup(urllib2.urlopen(URL),'html.parser')
-
-uploaded = 0
-downloaded = 0
-total = 0
-remaining = 350
-password='pass'
-username='user'
+def restart():
+    import sys
+    print("argv was",sys.argv)
+    print("sys.executable was", sys.executable)
+    print("restart now")
+    import os
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
+    sys.exit(0)
 
 def main():
     global uploaded,downloaded,total,remaining,password,username
@@ -93,7 +102,7 @@ def main():
     print login_data
 
     # Authenticate
-    r = session.post(URL, data = login_data)
+    # r = session.post(URL, data = login_data)
     # print "POST DETAILS : "
     # print r.content
     # Try accessing a page that requires you to be logged in
@@ -113,10 +122,23 @@ def main():
     'start_date' : str(startDate)
     }
 
-    r = session.post('http://isp.hathway.net:7406/selfcare/index.php?r=site/usage_details', data = usage_data)
-    print "Usage Response : "
-    print r.content
-    data = json.loads(r.content)
+    # r = session.post('http://isp.hathway.net:7406/selfcare/index.php?r=site/usage_details', data = usage_data)
+    # print "Usage Response : "
+    # print r.content
+    # data = json.loads(r.content)
+    while True:
+        r = session.post(URL, data = login_data)
+        print r.content
+        r = session.post('http://isp.hathway.net:7406/selfcare/index.php?r=site/usage_details', data = usage_data)
+        data = json.loads(r.content)
+        print "Usage Response : "
+        print r.content
+        if "statustext" not in data:
+            break
+        print data
+        time.sleep(5)
+
+    print "Success"
     for item in data:
         uploaded = uploaded + getUsageNumber(item["bytes_uplink"])
         downloaded = downloaded + getUsageNumber(item["bytes_downlink"])
@@ -132,4 +154,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-    app.run(host='0.0.0.0',debug=True)
+    app.run(host='0.0.0.0',debug=False)
