@@ -1,6 +1,6 @@
 {
-  "name": "A browser action with a popup that changes the page color",
-  "description": "Change the current page color",
+  "name": "Hathway Data Usage",
+  "description": "Calculates the Hathway Data Usage for the current month",
   "version": "1.0",
   "permissions": [
     "tabs", "http://*/*", "https://*/*"

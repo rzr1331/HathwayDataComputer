@@ -6,7 +6,7 @@
     <script src="https://use.fontawesome.com/5933425af3.js"></script>
     <title>Hathway Data Usage Calculator</title>
 
-    <link rel="shortcut icon" sizes="140x140" href="favicons/adoope-favicon.png">
+    <link rel="shortcut icon" sizes="140x140" href="favicons/icon.png">
     <link rel="manifest" href="favicons/manifest.json">
     <meta name="msapplication-TileColor" content="#E0E0E0">
     <meta name="msapplication-TileImage" content="favicons/ms-icon-144x144.png">
@@ -188,8 +188,10 @@
 <body>
 <div class="outer">
     <div class="middle">
-        <div id="particles-js"></div>
         <div class="contentsWidth">
+            <div id="portfolio">
+                <h3 id="portfolioHead">Hathway Data Usage</h3>
+            </div>
             <div class="separator"></div>
             <div id="portfolio">
                 <h3 id="portfolioHead"> {{ startDate }} - {{ endDate }}</h3>
@@ -214,13 +216,5 @@
         </div>
     </div>
 </div>
-    <script>
-        var bodyCon = document.getElementsByTagName('body')[0];
-        bodyCon.style.minHeight = window.innerHeight;
-
-        particlesJS.load('particles-js', 'static/particlesjs-config.json', function() {
-            console.log('callback - particles.js config loaded');
-        });
-    </script>
 </body>
 </html>

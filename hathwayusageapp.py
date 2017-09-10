@@ -17,8 +17,8 @@ uploaded = 0
 downloaded = 0
 total = 0
 remaining = 350
-password='Hathway@123'
-username='sahaiavichal'
+password='pass'
+username='user'
 
 app = Flask('UsageCal')
 
